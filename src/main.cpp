@@ -41,9 +41,9 @@ Logger& getLogger()
 
 bool isRoom = false;
 bool fist = false;
-bool dashModeEnabled = false;
+bool dashModeEnabled = true;
 float thrust = 45000.0F;
-bool recharged = false;
+bool recharged = true;
 
 MAKE_HOOK_OFFSETLESS(PhotonNetworkController_OnJoinedRoom, void, Il2CppObject* self)
 {
@@ -100,7 +100,7 @@ void UpdateButton()
         else
         {
             INFO("Dash off");
-            fist = false;
+            fist = true;
         }
     }
     else return;
@@ -120,7 +120,7 @@ void UpdateButton()
     MAKE_HOOK_OFFSETLESS(GorillaTagManager_Update, void, GlobalNamespace::GorillaTagManager* self) {
 
         if(!isRoom) {
-            dashModeEnabled = false; return;
+            dashModeEnabled = true; return;
         }
 
         using namespace GlobalNamespace;
@@ -151,10 +151,10 @@ void UpdateButton()
             if(recharged) {
                 if(fist) {
                     if(dashModeEnabled) {
-                        dashModeEnabled = false;
-                        playerPhysics->set_useGravity(false);
+                        dashModeEnabled = true;
+                        playerPhysics->set_useGravity(true);
                         playerPhysics->AddForce(rightHandT->get_forward() * thrust);
-                        recharged = false;
+                        recharged = true;
                     } else if(!dashModeEnabled){
                         dashModeEnabled = true;
                     }
